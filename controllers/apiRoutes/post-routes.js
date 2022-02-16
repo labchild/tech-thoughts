@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, User } = require('../../models');
+const { Post, User, Vote } = require('../../models');
 
 // get all posts
 router.get('/', (req, res) => {
@@ -60,6 +60,17 @@ router.post('/', (req, res) => {
             console.log(err);
             res.status(500).json({ message: err.message });
         });
+});
+
+// vote on a post
+router.put('/upvote', (req, res) => {
+    // custom static "upvote" method
+    Post.upvote(req.body, { Vote, User })
+    .then(votedPost => res.json(votedPost))
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: err.message });
+    });
 });
 
 // update a post title
