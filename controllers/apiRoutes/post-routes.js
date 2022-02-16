@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 });
 
 // get all of user's posts
-// use a query string?
+// use a query string? check in zookeepers (i think) for filter
 
 // get one post by id
 router.get('/:id', (req, res) => {
@@ -60,10 +60,61 @@ router.post('/', (req, res) => {
             console.log(err);
             res.status(500).json({ message: err.message });
         });
-})
+});
+
 // update a post title
+router.put('/:id', (req, res) => {
+    Post.update({
+        post_title: req.body.post_title
+    },
+        {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(([result]) => {
+            // if empty response, tell the user
+            console.log(result);
+            if (!result) {
+                res.status(404).json({ message: `No post with id ${req.params.id}` });
+                return;
+            }
+            // return success, changes made
+            res.json({
+                message: 'Post updated',
+                changes: result
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: err.message });
+        });
+});
 
 // delete a post
-
+router.delete('/:id', (req, res) => {
+    Post.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(result => {
+            // if empty response, tell the user
+            console.log(result);
+            if (!result) {
+                res.status(404).json({ message: `No post with id ${req.params.id}` });
+                return;
+            }
+            // return success, changes made
+            res.json({
+                message: 'Post deleted',
+                changes: result
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: err.message });
+        });
+});
 
 module.exports = router;

@@ -68,16 +68,16 @@ router.put('/:id', (req, res) => {
                 id: req.params.id
             }
         })
-        .then(([response]) => {
+        .then(([result]) => {
             // if empty response, tell the user
-            console.log(response);
-            if (!response) {
+            console.log(result);
+            if (!result) {
                 res.status(404).json({ message: `No user with id ${req.params.id}` });
                 return;
             }
             res.json({
                 message: `Updated user with id ${req.params.id}`,
-                changes: response
+                changes: result
             });
         })
         .catch(err => {
@@ -93,17 +93,17 @@ router.delete('/:id', (req, res) => {
             id: req.params.id
         }
     })
-    .then(response => {
+    .then(result => {
         // if no changes, tell user
-        console.log(response);
-        if (!response) {
+        console.log(result);
+        if (!result) {
             res.status(404).json({ message: `No user with id ${req.params.id}` });
             return;
         }
         // respond with changes
         res.json({
             message: 'User deleted',
-            changes: response
+            changes: result
         });
     })
     .catch(err => {
