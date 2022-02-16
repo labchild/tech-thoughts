@@ -15,6 +15,31 @@ router.get('/', (req, res) => {
         });
 });
 
+// get one user by id
+router.get('/:id', (req, res) => {
+    User.findOne({
+        where: {
+            id: req.params.id
+        },
+        attributes: {
+            exclude: ['password']
+        }
+    })
+        .then(user => {
+            // if empty response, tell the user
+            if (!user) {
+                res.status(404).json({ message: `No user with id ${req.params.id}` });
+                return;
+            }
+            // return found user record    
+            res.json(user);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: err.message });
+        });
+})
+
 // create a user
 router.post('/', (req, res) => {
     User.create({
@@ -22,9 +47,64 @@ router.post('/', (req, res) => {
         email: req.body.email,
         password: req.body.password
     })
-    .then(user => {
-        console.log('made it!');
-        res.json(user);
+        .then(user => {
+            console.log('made it!');
+            res.json(user);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: err.message });
+        });
+});
+
+// update username
+router.put('/:id', (req, res) => {
+    User.update(
+        {
+            username: req.body.username
+        },
+        {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(([response]) => {
+            // if empty response, tell the user
+            console.log(response);
+            if (!response) {
+                res.status(404).json({ message: `No user with id ${req.params.id}` });
+                return;
+            }
+            res.json({
+                message: `Updated user with id ${req.params.id}`,
+                changes: response
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: err.message });
+        });
+});
+
+// delete user profile
+router.delete('/:id', (req, res) => {
+    User.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(response => {
+        // if no changes, tell user
+        console.log(response);
+        if (!response) {
+            res.status(404).json({ message: `No user with id ${req.params.id}` });
+            return;
+        }
+        // respond with changes
+        res.json({
+            message: 'User deleted',
+            changes: response
+        });
     })
     .catch(err => {
         console.log(err);
