@@ -69,7 +69,13 @@ router.post('/login', (req, res) => {
             return;
         }
         
-        // check password
+        // check password with method from model
+        const validPassword = user.checkPassword(req.body.password);
+
+        if (!validPassword) {
+            res.status(404).json({ message: 'Incorrect password' });
+            return;
+        }
         res.json(user);
     })
     .catch(err => {
