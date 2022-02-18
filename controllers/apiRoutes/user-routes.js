@@ -57,6 +57,27 @@ router.post('/', (req, res) => {
         });
 });
 
+router.post('/login', (req, res) => {
+    User.findOne({
+        where: {
+            email: req.body.email
+        }
+    })
+    .then(user => {
+        if (!user) {
+            res.status(404).json({ message: `Incorrect email`});
+            return;
+        }
+        
+        // check password
+        res.json(user);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: err.message });
+    });
+})
+
 // update username
 router.put('/:id', (req, res) => {
     User.update(
