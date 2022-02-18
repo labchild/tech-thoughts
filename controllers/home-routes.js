@@ -37,6 +37,11 @@ router.get('/', (req, res) => {
 
 });
 
+// render login/sign up page
+router.get('/login', (req, res) => {
+    res.render('login');
+})
+
 // view a single post
 router.get('/post/:id', (req, res) => {
     Post.findOne({
