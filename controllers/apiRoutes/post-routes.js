@@ -76,7 +76,8 @@ router.put('/upvote', (req, res) => {
 // update a post title
 router.put('/:id', (req, res) => {
     Post.update({
-        post_title: req.body.post_title
+        post_title: req.body.post_title,
+        post_body: req.body.post_body
     },
         {
             where: {

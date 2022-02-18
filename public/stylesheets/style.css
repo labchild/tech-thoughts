@@ -1,3 +1,10 @@
+:root {
+    --main-bg: #cdcdcd;
+    --light-bg: #e9e9e9;
+    --lt-blue-bg: #99d3df;
+    --dk-blue-bg: #88bbd6;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -6,6 +13,30 @@ body, html {
     height: 100%;
     padding: 0;
     margin: 0;
+    background: var(--main-bg);
+}
+
+header {
+    border-bottom: solid var(--light-bg);
+    width: 90%;
+    margin: auto;
+}
+
+.brand-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.wrapper {
+    margin: 0 auto;
+}
+
+main {
+    padding: 2%;
+    text-align: center;
+    width: 80%;
+    margin: auto;
 }
 
 .clean-link {
@@ -13,6 +44,29 @@ body, html {
 }
 
 .logo-sm {
-    width: 1.4em;
-    margin: 0 .3em 0 1em;
+    width: 1.7em;
+    margin: 0 0 0 1em;
+}
+
+.post {
+    text-align: left;
+    background: var(--light-bg);
+    border: solid var(--dk-blue-bg);
+}
+
+.post-head {
+    background-color: var(--dk-blue-bg);
+    color: var(--light-bg);
+}
+
+.post-author {
+    font-style: italic;
+    font-size: .8em;
+    margin-bottom: 0;
+    line-height: 1em;
+}
+
+/* color utilities */
+.my-border-light {
+    border-color: var(--light-bg)
 }
