@@ -18,7 +18,7 @@
 
 <body>
     <div class="wrapper">
-        <header class="my-border-light">
+        <header class="m-auto">
             <div class="navbar">
                 <h1 class="navbar-brand">
                     <a class="clean-link text-secondary brand-text" href="/">
@@ -28,9 +28,12 @@
                 </h1>
                 
                 <nav class="navbar-menu">
+                    {{#if loggedIn}}
                     <a href="/dashboard" class="btn btn-link clean-link">dashboard</a>
                     <button id="logout-btn" class="btn btn-link clean-link">logout</button>
+                    {{else}}
                     <a href="/login" class="btn btn-link clean-link">login</a>
+                    {{/if}}
                 </nav>
                 
             </div>
@@ -40,13 +43,18 @@
             {{{body}}}
         </main>
 
-        <footer class="text-muted m-auto w-50 p-3 text-center">
-            <a class="clean-link" href="https://github.com/labchild/tech-thoughts" target="_blank">
+        <footer class="text-muted m-auto p-3 text-center">
+            <a class="clean-link" href="https://github.com/labchild/tech-thoughts/issues" target="_blank">
+                Report an issue 
                 <span class="fa-brands fa-github mr-2"></span>
             </a>
             <p class="d-inline-block mx-4">&copy;2022 labchild</p>   
         </footer>
     </div>
+
+    {{#if loggedIn}}
+    <script src="/javascript/logout.js"></script>
+    {{/if}}
 </body>
 
 </html>

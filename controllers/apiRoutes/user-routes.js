@@ -57,6 +57,7 @@ router.post('/', (req, res) => {
         });
 });
 
+// login (create user session)
 router.post('/login', (req, res) => {
     User.findOne({
         where: {
@@ -75,14 +76,31 @@ router.post('/login', (req, res) => {
             res.status(404).json({ message: 'Incorrect password' });
             return;
         }
-        // if all good, send send user
-        res.json(user);
+        // if all good, create user session and send user
+        req.session.save(() => {
+            req.session.user_id = user.id;
+            req.session.username = user.username;
+            req.session.loggedIn = true;
+            
+            res.json(user);
+        });
     })
     .catch(err => {
         console.log(err);
         res.status(500).json({ message: err.message });
     });
-})
+});
+
+// logout route (destory user session)
+router.post('/logout', (req, res) => {
+    if (req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
+    } else {
+        res.status(404).end();
+    }
+});
 
 // update username
 router.put('/:id', (req, res) => {

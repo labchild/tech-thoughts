@@ -32,7 +32,10 @@ router.get('/', (req, res) => {
             const posts = dbPosts.map(post => {
                 return post.get({ plain: true });
             });
-            res.render('homepage', { posts });
+            res.render('homepage', { 
+                posts,
+                loggedIn: req.session.loggedIn
+            });
         })
 
 });
