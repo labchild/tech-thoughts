@@ -1,10 +1,12 @@
 async function upvoteClickHandler(e) {
     e.preventDefault();
 
+    // get post id from url string
     const post_id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
-    console.log(e.target, post_id);
+    
+    // put vote
     const response = await fetch('/api/posts/upvote', {
         method: 'PUT',
         body: JSON.stringify({ post_id }),
@@ -13,6 +15,7 @@ async function upvoteClickHandler(e) {
         }
     });
 
+    // if success reload page, else alert user
     if (response.ok) {
         document.location.reload();
     } else {
