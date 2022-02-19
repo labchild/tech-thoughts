@@ -1,20 +1,15 @@
 async function showVotesHandler(e) {
-    e.preventDefault();
-    console.log(e.target);
-    const id = e.target.getAttribute('id');
-    const voteEl = document.querySelector('#post-votes');
+    // const id = e.target.getAttribute('id');
+    // const voteEl = e.target.sibling;
+    // select grandparent as post meta
+    const postMetaEl = e.target.parentElement.parentElement;
+    // select second child as vote el
+    const voteEl = postMetaEl.querySelector('.post-votes');
 
-    if (voteEl.style.display === 'block') {
-        voteEl.style.display = 'none';
-    } else {
+    if (voteEl.style.display === 'none') {
         voteEl.style.display = 'block';
-        const dbPostVotes = await fetch(`/api/posts/votes/${id}`);
-        console.log(dbPostVotes);
-
-        // const votes = dbPostVotes.get({plain:true});
-        // console.log(votes);
-        let votes = `Liked by ${dbPostVotes.user.username}`;
-        console.log(votes);
+    } else {
+        voteEl.style.display = 'none';
     }
 };
 

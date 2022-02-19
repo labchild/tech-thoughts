@@ -1,7 +1,5 @@
 <section class="content-wrapper">
-    <article class="post my-3">
-        {{>post-card post}}
-    </article>
+    {{>post-card post}}
 
     {{#if loggedIn}}
     <form class="form-group comment-form">
@@ -17,11 +15,7 @@
     {{/if}}
 
     {{#if post.comments.length}}
-    <div class="wrapper">
-        {{#each post.comments as |comment|}}
-        {{>comment-card comment}}
-        {{/each}}
-    </div>
+    {{>comments post.comments}}
     {{/if}}
 </section>
 <script src="/javascript/post-votes.js"></script>

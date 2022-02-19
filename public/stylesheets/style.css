@@ -101,8 +101,11 @@ button:active {
     line-height: 1em;
 }
 
-#post-votes {
+.post-votes {
     display: none;
+    font-style: italic;
+    font-size: .8em;
+    line-height: 1em;
 }
 
 /* form styles */

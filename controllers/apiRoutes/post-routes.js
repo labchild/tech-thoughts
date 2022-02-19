@@ -65,11 +65,36 @@ router.get('/:id', (req, res) => {
         where: {
             id: req.params.id
         },
-        attributes: ['id', 'post_title', 'post_body', 'created_at'],
-        include: {
-            model: User,
-            attributes: ['username']
-        }
+        attributes: [
+            'id',
+            'post_title',
+            'post_body',
+            'created_at',
+            [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+        ],
+        order: [['created_at', 'DESC']],
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            },
+            {
+                model: Comment,
+                attributes: ['id', 'comment_text', 'created_at', 'post_id', 'user_id'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
+            },
+            {
+                model: Vote,
+                attributes: ['id', 'post_id', 'user_id'],
+                include: {
+                    model: User, 
+                    attributes: ['username']
+                }
+            }
+        ]
     })
         .then(post => {
             // if empty response, tell user post not found

@@ -2,9 +2,8 @@
     <h2 class="lead text-secondary">Recent Posts</h2>
     <div class="text-center">
         {{#each posts as |post|}}
-        <article class="post my-3">
-            {{>post-card post}}
-        </article>
+        {{>post-card post}}
         {{/each}}
     </div>
 </section>
+<script src="/javascript/post-votes.js"></script>

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('sequelize');
-const { Post, User, Comment } = require('../models');
+const { Post, User, Comment, Vote } = require('../models');
 
 // render homepage
 router.get('/', (req, res) => {
@@ -15,6 +15,10 @@ router.get('/', (req, res) => {
         order: [['created_at', 'DESC']],
         include: [
             {
+                model: User,
+                attributes: ['username']
+            },
+            {
                 model: Comment,
                 attributes: ['id', 'comment_text', 'created_at', 'post_id', 'user_id'],
                 include: {
@@ -23,8 +27,12 @@ router.get('/', (req, res) => {
                 }
             },
             {
-                model: User,
-                attributes: ['username']
+                model: Vote,
+                attributes: ['id', 'post_id', 'user_id'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
             }
         ]
     })
@@ -65,6 +73,10 @@ router.get('/post/:id', (req, res) => {
         order: [['created_at', 'DESC']],
         include: [
             {
+                model: User,
+                attributes: ['username']
+            },
+            {
                 model: Comment,
                 attributes: ['id', 'comment_text', 'created_at', 'post_id', 'user_id'],
                 include: {
@@ -73,8 +85,12 @@ router.get('/post/:id', (req, res) => {
                 }
             },
             {
-                model: User,
-                attributes: ['username']
+                model: Vote,
+                attributes: ['id', 'post_id', 'user_id'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
             }
         ]
     }).then(dbPost => {
