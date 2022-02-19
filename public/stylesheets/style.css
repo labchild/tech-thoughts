@@ -63,6 +63,21 @@ main {
     margin: 0 0 0 1em;
 }
 
+/* button no style */
+button {
+    background: var(--light-bg);
+    display: inline-block;
+    border: none;
+    margin: 0;
+    text-decoration: none;
+    font-size: 1rem;
+    text-align: center;
+}
+
+button:active {
+    transform: scale(0.99);
+}
+
 /* post styles */
 .post {
     text-align: left;
@@ -73,6 +88,10 @@ main {
 .post-head {
     background-color: var(--dk-blue-bg);
     color: var(--light-bg);
+}
+
+.post-title {
+    color: var(--light-bg);   
 }
 
 .post-author {
@@ -120,4 +139,30 @@ main {
     top: -2px;
     background-position: 1px -50px;
     color: var(--light-bg);
+}
+
+/* comment styles */
+.comment {
+    border-bottom: solid var(--muted-grey);
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment-author {
+    color: var(--brand-color);
+    font-style: italic;
+    font-size: .8em;
+    margin-bottom: 0;
+    line-height: 1em;
+}
+
+/* comment form */
+.comment-form {
+    background-color: var(--main-bg);
+}
+
+.btn-vote {
+    background-image: linear-gradient(#7cd69f, #50c87f, #3c965f);
 }

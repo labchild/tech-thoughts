@@ -1,15 +1,32 @@
 const router = require('express').Router();
-const { Post, User, Vote } = require('../../models');
+const { Post, User, Vote, Comment } = require('../../models');
+const sequelize = require('../../config/connection');
 
 // get all posts
 router.get('/', (req, res) => {
     Post.findAll({
-        attributes: ['id', 'post_title', 'post_body', 'created_at'],
+        attributes: [
+            'id',
+            'post_title',
+            'post_body',
+            'created_at',
+            [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+        ],
         order: [['created_at', 'DESC']],
-        include: {
-            model: User,
-            attributes: ['username']
-        }
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            },
+            {
+                model: Comment,
+                attributes: ['id', 'comment_text', 'created_at', 'post_id', 'user_id'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
+            }
+        ]
     })
         .then(posts => res.json(posts))
         .catch(err => {
@@ -20,6 +37,24 @@ router.get('/', (req, res) => {
 
 // get all of user's posts
 // use a query string? check in zookeepers (i think) for filter
+
+// get all votes for a post 
+router.get('/votes/:id', (req, res) => {
+    Vote.findAll({
+        where: {
+            post_id: req.params.id
+        },
+        include: {
+            model: User,
+            attributes: ['username']
+        }
+    })
+    .then(postVotes => res.json(postVotes))
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    })
+});
 
 // get one post by id
 router.get('/:id', (req, res) => {
@@ -66,11 +101,11 @@ router.post('/', (req, res) => {
 router.put('/upvote', (req, res) => {
     // custom static "upvote" method
     Post.upvote(req.body, { Vote, User })
-    .then(votedPost => res.json(votedPost))
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({ message: err.message });
-    });
+        .then(votedPost => res.json(votedPost))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: err.message });
+        });
 });
 
 // update a post title

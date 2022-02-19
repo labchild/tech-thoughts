@@ -2,13 +2,13 @@
 const express = require('express');
 const path = require('path');
 const exhbs = require('express-handlebars');
-const hbs = exhbs.create({});
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // import my modules
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
+const helpers = require('./utils/helpers');
 
 // define instance
 const app = express();
@@ -24,6 +24,7 @@ const sess = {
 };
 
 // middleware
+const hbs = exhbs.create({ helpers });
 app.set('view engine', 'handlebars');
 app.engine('handlebars', hbs.engine);
 

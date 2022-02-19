@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
             const posts = dbPosts.map(post => {
                 return post.get({ plain: true });
             });
-            res.render('homepage', { 
+            res.render('homepage', {
                 posts,
                 loggedIn: req.session.loggedIn
             });
@@ -42,6 +42,10 @@ router.get('/', (req, res) => {
 
 // render login/sign up page
 router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+        res.redirect('/');
+        return;
+    }
     res.render('login');
 })
 
@@ -74,15 +78,18 @@ router.get('/post/:id', (req, res) => {
             }
         ]
     }).then(dbPost => {
-       if (!dbPost) {
-           res.json({ message: `No post with id ${req.params.id}`});
-           return;
-       }
-       // serialize post data
-       const post = dbPost.get({ plain: true });
-       res.render('single-post', { post }); 
+        if (!dbPost) {
+            res.json({ message: `No post with id ${req.params.id}` });
+            return;
+        }
+        // serialize post data
+        const post = dbPost.get({ plain: true });
+        res.render('single-post', {
+            post,
+            loggedIn: req.session.loggedIn
+        });
     })
-    
+
 })
 
 module.exports = router;

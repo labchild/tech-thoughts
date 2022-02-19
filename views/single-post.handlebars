@@ -1,16 +1,26 @@
 <section class="content-wrapper">
     <article class="post my-3">
-        <div class="post-head p-2 d-flex flex-row align-items-center justify-content-between">
-            <h3 class="post-title lead">{{post.post_title}}</h3>
-            <p class="post-author text-muted">posted by {{post.user.username}} on {{post.created_at}}</p>
-        </div>
-        <div class="post-body text-secondary p-2">
-            {{post.post_body}}
-        </div>
-        
+        {{>post-card post}}
     </article>
-    <div class="post-meta text-left">
-            {{post.vote_count}} points |
-            <a href="/post/{{post.id}}" class="clean-link">{{post.comments.length}} comments</a>
+
+    {{#if loggedIn}}
+    <form class="form-group comment-form">
+        <div class="form-div">
+            <label for="comment-body">what are your thoughts?</label>
+            <textarea name="comment-body" id="comment-body" class="form-control"></textarea>
         </div>
+        <div class="form-btn">
+            <button type="button" class="btn-brand btn-vote">like post</button>
+            <button type="submit" class="btn-brand">add comment</button>
+        </div>
+    </form>
+    {{/if}}
+
+    {{#if post.comments.length}}
+    <div class="wrapper">
+        {{#each post.comments as |comment|}}
+        {{>comment-card comment}}
+        {{/each}}
+    </div>
+    {{/if}}
 </section>
