@@ -101,6 +101,10 @@ button:active {
     line-height: 1em;
 }
 
+#post-votes {
+    display: none;
+}
+
 /* form styles */
 .form-group {
     background-color: var(--light-bg);

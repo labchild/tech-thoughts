@@ -49,7 +49,10 @@ router.get('/votes/:id', (req, res) => {
             attributes: ['username']
         }
     })
-    .then(postVotes => res.json(postVotes))
+    .then(postVotes => {
+        console.log(postVotes);
+        res.json(postVotes);
+    })
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
