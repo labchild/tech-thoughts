@@ -128,7 +128,10 @@ router.post('/', (req, res) => {
 // vote on a post
 router.put('/upvote', (req, res) => {
     // custom static "upvote" method
-    Post.upvote(req.body, { Vote, User })
+    Post.upvote({ 
+        post_id: req.body.post_id, 
+        user_id: req.session.user_id 
+    }, { Vote, User })
         .then(votedPost => res.json(votedPost))
         .catch(err => {
             console.log(err);

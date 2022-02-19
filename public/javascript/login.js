@@ -46,8 +46,8 @@ async function signupFormHandler(e) {
         });
         console.log(response);
         if (response.ok) {
-            alert('Thanks for signing up!');
-            document.location.replace('/');
+            alert('Thanks for signing up! Login to start sharing your thoughts.');
+            document.location.reload();
         } else {
             alert(response.statusText);
         }
