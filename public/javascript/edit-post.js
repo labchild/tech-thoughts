@@ -1,13 +1,13 @@
 async function editPostFormHandler(e) {
     e.preventDefault();
     const formEl = e.target;
-    
+
     const id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
     const post_title = formEl.querySelector('#edit-title').value.trim();
     const post_body = formEl.querySelector('#edit-body').value.trim();
-    
+
     if (post_title && post_body) {
         // send updated post to database, await response
         const response = await fetch(`/api/posts/${id}`, {
@@ -17,7 +17,7 @@ async function editPostFormHandler(e) {
                 post_body
             }),
             headers: {
-                'Content-Type':'application/json'
+                'Content-Type': 'application/json'
             }
         });
         console.log(response);
@@ -33,6 +33,38 @@ async function editPostFormHandler(e) {
 
 async function deletePostHandler(e) {
     e.preventDefault();
+    const formEl = document.querySelector('.edit-post-form');
+    const id = window.location.toString().split('/')[
+        window.location.toString().split('/').length - 1
+    ];
+
+    // confirm delete
+    const confirmDelete = confirm('Are you sure you want to delete this post? This action cannot be reversed.');
+
+    if (confirmDelete) {
+        // await delete and respond with dashboard
+        const response = await fetch(`/api/posts/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            formEl.innerHTML = `
+        <div class="form-title lead pb-1 mb-2 d-flex flex-row justify-content-between align-items-center">
+            post deleted
+        </div>`;
+            setTimeout(() => {
+                document.location.replace('/dashboard');
+            }, 2000);
+        } else {
+            alert(`${response.statusText}
+            Something went wrong...`);
+        }
+    } else {
+        return;
+    }
 };
 
 document.querySelector('.edit-post-form').addEventListener('submit', editPostFormHandler);
