@@ -22,6 +22,8 @@ async function loginFormHandler(e) {
         } else {
             alert('Incorrect email or password');
         }
+    } else {
+        alert('Please enter your email and password.')
     }
 };
 
@@ -49,8 +51,11 @@ async function signupFormHandler(e) {
             alert('Thanks for signing up! Login to start sharing your thoughts.');
             document.location.reload();
         } else {
-            alert(response.statusText);
+            alert(`${response.statusText}
+            Username or email is already being used for an account.`);
         }
+    } else {
+        alert('Enter a username, email, and password to sign up for an account.');
     }
 };
 

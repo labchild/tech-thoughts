@@ -22,6 +22,10 @@
     <section class="post-data">
         <div class="text-center user-posts">
             {{#each posts as |post|}}
+            <div class="post-control">
+                <a href="/dashboard/post/{{post.id}}" class="clean-link">edit post</a>
+                <button type="button" class="btn-brand btn-delete">delete post</button>
+            </div>
             {{>post-card post}}
             {{/each}}
         </div>
