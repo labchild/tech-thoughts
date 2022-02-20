@@ -20,7 +20,6 @@ async function commentFormHandler(e) {
         // reload if created, alert if error
         if (response.ok) {
             document.location.reload();
-            return;
         } else {
             alert(response.statusText);
         }
