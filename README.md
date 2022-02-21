@@ -19,7 +19,7 @@ A CMS, community-driven blog for developers, engineers, and programmers to conne
 Users can create an account, create posts (thoughts), like posts, and comment on posts. Users can also access, edit, and delete their own posts from an account dashboard.
 
 ### Built With
-This project uses the following packages:
+This project uses the following resources:
 * [Sequelize](https://www.npmjs.com/package/sequelize)
 * [MySQL 2](https://www.npmjs.com/package/mysql2)
 * [Express](https://expressjs.com/)
@@ -28,6 +28,7 @@ This project uses the following packages:
 * [bcrypt](https://www.npmjs.com/package/bcrypt)
 * [Handlebars](https://handlebarsjs.com/)
     * [Express Handlebars View Engine](https://www.npmjs.com/package/express-handlebars)
+* [Bootstrap](https://getbootstrap.com/)
 
 ## Installation
 This project requires a MySQL database and node.js. To run this project from your local host, download or clone this repository to your computer. You will need enviroment variables (```.env``` file). Create one (```touch .env```) in the project root folder and include the following information:
