@@ -99,7 +99,7 @@ router.get('/post/:id', (req, res) => {
         ]
     }).then(dbPost => {
         if (!dbPost) {
-            res.json({ message: `No post with id ${req.params.id}` });
+            res.redirect('/');
             return;
         }
         // serialize post data
