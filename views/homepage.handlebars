@@ -1,8 +1,11 @@
-<div class="w-75 text-center m-auto">
-    <h2 class="title">tech thoughts</h2>
-    <p class="lead">where developers, engineers, programmers, hobbyists, and everyone else can share their thoughts</p>
-    <div class="w-75 text-center m-auto p-5">
-        <img src="/images/tech-thoughts-icon.png" alt="tech thoughts logo">
+<section class="content-wrapper">
+    <h2 class="lead text-secondary">Recent Posts</h2>
+    <div class="text-center">
+        {{#each posts as |post|}}
+        {{>post-card post}}
+        {{/each}}
     </div>
-    <p class="lead text-muted">coming soon</p>
-</div>
+</section>
+{{#if posts}}
+<script src="/javascript/post-votes.js"></script>
+{{/if}}

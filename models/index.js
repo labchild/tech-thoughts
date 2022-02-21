@@ -5,11 +5,11 @@ const Comment = require('./Comment');
 
 // user has posts, each post belongs to a user
 User.hasMany(Post, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
 });
 
 Post.belongsTo(User, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
 });
 
 // vote associations
@@ -50,12 +50,14 @@ Post.hasMany(Vote, {
 // Comment associations
 // comment is by a user, FK user_id
 Comment.belongsTo(User, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE'
 });
 
 // comment is on a post, fk post_id
 Comment.belongsTo(Post, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete: 'CASCADE'
 });
 
 // user can make many comments, fk user_id

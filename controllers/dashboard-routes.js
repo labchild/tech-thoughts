@@ -1,10 +1,15 @@
 const router = require('express').Router();
 const sequelize = require('sequelize');
 const { Post, User, Comment, Vote } = require('../models');
+const withAuth = require('../utils/auth');
 
-// render homepage
-router.get('/', (req, res) => {
+// render dashboard
+router.get('/', withAuth, (req, res) => {
+
     Post.findAll({
+        where: {
+            user_id: req.session.user_id
+        },
         attributes: [
             'id',
             'post_title',
@@ -36,11 +41,10 @@ router.get('/', (req, res) => {
             }
         ]
     })
-        .then(dbPosts => {
-            const posts = dbPosts.map(post => {
-                return post.get({ plain: true });
-            });
-            res.render('homepage', {
+        .then(dbUserPosts => {
+            const posts = dbUserPosts.map(post => post.get({ plain: true }));
+
+            res.render('dashboard', {
                 posts,
                 loggedIn: req.session.loggedIn
             });
@@ -49,20 +53,10 @@ router.get('/', (req, res) => {
             console.log(err);
             res.status(500).json({ message: err.message });
         });
-
 });
 
-// render login/sign up page
-router.get('/login', (req, res) => {
-    if (req.session.loggedIn) {
-        res.redirect('/');
-        return;
-    }
-    res.render('login');
-})
-
-// view a single post
-router.get('/post/:id', (req, res) => {
+// edit post
+router.get('/post/:id', withAuth, (req, res) => {
     Post.findOne({
         where: {
             id: req.params.id
@@ -97,23 +91,19 @@ router.get('/post/:id', (req, res) => {
                 }
             }
         ]
-    }).then(dbPost => {
-        if (!dbPost) {
-            res.redirect('/');
-            return;
-        }
-        // serialize post data
-        const post = dbPost.get({ plain: true });
-        res.render('single-post', {
-            post,
-            loggedIn: req.session.loggedIn
-        });
     })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({ message: err.message });
-    });
+        .then(dbPost => {
+            const post = dbPost.get({ plain: true });
 
+            res.render('edit-post', {
+                post,
+                loggedIn: req.session.loggedIn
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: err.message });
+        });
 })
 
 module.exports = router;

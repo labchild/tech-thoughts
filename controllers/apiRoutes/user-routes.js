@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 // get all users
 router.get('/', (req, res) => {
@@ -47,18 +48,60 @@ router.post('/', (req, res) => {
         email: req.body.email,
         password: req.body.password
     })
-        .then(user => {
-            console.log('made it!');
-            res.json(user);
-        })
+        .then(user => res.json(user))
         .catch(err => {
             console.log(err);
             res.status(500).json({ message: err.message });
         });
 });
 
+// login (create user session)
+router.post('/login', (req, res) => {
+    User.findOne({
+        where: {
+            email: req.body.email
+        }
+    })
+    .then(user => {
+        if (!user) {
+            res.status(404).json({ message: `Incorrect email`});
+            return;
+        }
+        
+        // check password with method from model
+        const validPassword = user.checkPassword(req.body.password);
+        if (!validPassword) {
+            res.status(404).json({ message: 'Incorrect password' });
+            return;
+        }
+        // if all good, create user session and send user
+        req.session.save(() => {
+            req.session.user_id = user.id;
+            req.session.username = user.username;
+            req.session.loggedIn = true;
+            
+            res.json(user);
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: err.message });
+    });
+});
+
+// logout route (destory user session)
+router.post('/logout', (req, res) => {
+    if (req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
+    } else {
+        res.status(404).end();
+    }
+});
+
 // update username
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
     User.update(
         {
             username: req.body.username
@@ -87,7 +130,7 @@ router.put('/:id', (req, res) => {
 });
 
 // delete user profile
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
     User.destroy({
         where: {
             id: req.params.id
