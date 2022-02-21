@@ -1,10 +1,12 @@
 async function loginFormHandler(e) {
     e.preventDefault();
 
+    // get user data from form
     const email = document.querySelector('#email-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();
 
     if (email && password) {
+        // create user in db
         const response = await fetch('/api/users/login', {
             method: 'POST',
             body: JSON.stringify({
@@ -30,11 +32,13 @@ async function loginFormHandler(e) {
 async function signupFormHandler(e) {
     e.preventDefault();
 
+    // get user data from form
     const username = document.querySelector('#username-signup').value.trim();
     const email = document.querySelector('#email-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
 
     if (username && email && password) {
+        // create user in db
         const response = await fetch('/api/users', {
             method: 'POST',
             body: JSON.stringify({
@@ -46,16 +50,36 @@ async function signupFormHandler(e) {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(response);
+
         if (response.ok) {
-            alert('Thanks for signing up! Login to start sharing your thoughts.');
-            document.location.reload();
+            // if success, log user in and send to home
+            const login = await fetch('/api/users/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    email,
+                    password
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (login.ok) {
+                alert('Thanks for signing up!');
+                document.location.replace('/');
+            } else {
+                // aler to login failure
+                alert(`login.statusText
+            Something went wrong while logging you in. Try to login again.`);
+            }
         } else {
+            // alert to sign up failure
             alert(`${response.statusText}
-        Username or email may be already be attached to an account.
+        Username or email may already be attached to an account.
         Passwords must be at least 8 characters long.`);
         }
     } else {
+        // alert user all fields are required
         alert('Enter a username, email, and password to sign up for an account.');
     }
 };
