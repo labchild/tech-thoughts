@@ -112,7 +112,7 @@ router.get('/:id', (req, res) => {
 });
 
 // create a new post
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
     Post.create({
         post_title: req.body.post_title,
         post_body: req.body.post_body,
@@ -126,7 +126,7 @@ router.post('/', (req, res) => {
 });
 
 // vote on a post
-router.put('/upvote', (req, res) => {
+router.put('/upvote', withAuth, (req, res) => {
     // custom static "upvote" method
     Post.upvote({ 
         post_id: req.body.post_id, 
@@ -140,7 +140,7 @@ router.put('/upvote', (req, res) => {
 });
 
 // update a post title
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
     Post.update({
         post_title: req.body.post_title,
         post_body: req.body.post_body
@@ -170,7 +170,7 @@ router.put('/:id', (req, res) => {
 });
 
 // delete a post
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
     Post.destroy({
         where: {
             id: req.params.id

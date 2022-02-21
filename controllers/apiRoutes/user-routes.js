@@ -47,10 +47,7 @@ router.post('/', (req, res) => {
         email: req.body.email,
         password: req.body.password
     })
-        .then(user => {
-            console.log('made it!');
-            res.json(user);
-        })
+        .then(user => res.json(user))
         .catch(err => {
             console.log(err);
             res.status(500).json({ message: err.message });
@@ -103,7 +100,7 @@ router.post('/logout', (req, res) => {
 });
 
 // update username
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
     User.update(
         {
             username: req.body.username
@@ -132,7 +129,7 @@ router.put('/:id', (req, res) => {
 });
 
 // delete user profile
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
     User.destroy({
         where: {
             id: req.params.id

@@ -3,7 +3,7 @@ const sequelize = require('sequelize');
 const { Post, User, Comment, Vote } = require('../models');
 
 // render dashboard
-router.get('/', (req, res) => {
+router.get('/', withAuth, (req, res) => {
 
     Post.findAll({
         where: {
@@ -55,7 +55,7 @@ router.get('/', (req, res) => {
 });
 
 // edit post
-router.get('/post/:id', (req, res) => {
+router.get('/post/:id', withAuth, (req, res) => {
     Post.findOne({
         where: {
             id: req.params.id

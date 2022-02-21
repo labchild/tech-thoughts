@@ -52,7 +52,8 @@ async function signupFormHandler(e) {
             document.location.reload();
         } else {
             alert(`${response.statusText}
-            Username or email is already being used for an account.`);
+        Username or email may be already be attached to an account.
+        Passwords must be at least 8 characters long.`);
         }
     } else {
         alert('Enter a username, email, and password to sign up for an account.');
