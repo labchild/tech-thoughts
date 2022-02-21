@@ -15,18 +15,18 @@
             <textarea name="post-body" id="post-body" class="form-control"></textarea>
         </div>
         <div class="form-btn">
-            <button type="submit" class="btn-brand">submit</button>
+            <button type="submit" class="btn btn-brand">submit</button>
         </div>
     </form>
 
+    {{!-- post section  --}}
     <section class="post-data">
         <div class="text-center user-posts">
             {{#each posts as |post|}}
-            <div class="post-control">
-                <a href="/dashboard/post/{{post.id}}" class="clean-link">edit post</a>
-                <button type="button" class="btn-brand btn-delete">delete post</button>
-            </div>
             {{>post-card post}}
+            <div class="post-control text-right">
+                <a href="/dashboard/post/{{post.id}}" class=" btn btn-sm btn-brand clean-link">edit post</a>
+            </div>
             {{/each}}
         </div>
     </section>

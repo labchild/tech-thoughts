@@ -20,7 +20,7 @@ async function editPostFormHandler(e) {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(response);
+
         // send back to dashboard or alert to error
         if (response.ok) {
             document.location.replace('/dashboard');
@@ -50,6 +50,7 @@ async function deletePostHandler(e) {
             }
         });
 
+        // alert to success and send to dashboard or alert error
         if (response.ok) {
             formEl.innerHTML = `
         <div class="form-title lead pb-1 mb-2 d-flex flex-row justify-content-between align-items-center">

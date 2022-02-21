@@ -10,14 +10,14 @@
     </div>
     <div class="post-meta px-2 pt-2 text-muted">
         <p>
-            <button type="button" class="clean-link btn-vote-count" id="{{id}}">{{vote_count}} {{format_plural 'point'
+            <button type="button" class="clean-link btn-vote-count" id="{{id}}" {{#if vote_count}}{{else}}disabled{{/if}}>{{vote_count}} {{format_plural 'point'
                 vote_count}}</button> |
             <a href="/post/{{id}}" class="clean-link">{{comments.length}} {{format_plural 'comment'
                 comments.length}}</a>
         </p>
         <div>
-            {{#if votes.length}}
-            <p class="post-votes">liked by{{#each votes as |vote|}} {{vote.user.username}}{{/each}}</p>
+            {{#if vote_count}}
+            <p class="post-votes" style="display: none;">liked by{{#each votes as |vote|}} {{vote.user.username}}{{/each}}</p>
             {{/if}}
         </div>
     </div>

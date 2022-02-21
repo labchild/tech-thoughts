@@ -12,4 +12,7 @@ async function showVotesHandler(e) {
     }
 };
 
-document.querySelector('.btn-vote-count').addEventListener('click', showVotesHandler);
+const voteDataBtns = document.querySelectorAll('.btn-vote-count')
+voteDataBtns.forEach(button => {
+    button.addEventListener('click', showVotesHandler);
+})
