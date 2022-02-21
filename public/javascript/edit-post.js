@@ -2,6 +2,7 @@ async function editPostFormHandler(e) {
     e.preventDefault();
     const formEl = e.target;
 
+    // get post info from form and id from url string
     const id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];

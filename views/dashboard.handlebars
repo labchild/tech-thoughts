@@ -12,7 +12,7 @@
         </div>
         <div class="form-div">
             <label for="post_body">share your thoughts:</label>
-            <textarea name="post-body" id="post-body" class="form-control"></textarea>
+            <textarea name="post-body" id="post-body" class="form-control" rows="8"></textarea>
         </div>
         <div class="form-btn">
             <button type="submit" class="btn btn-brand">submit</button>
@@ -21,6 +21,7 @@
 
     {{!-- post section  --}}
     <section class="post-data">
+        <h4 class="lead text-secondary mt-4">Your Posts</h3>
         <div class="text-center user-posts">
             {{#each posts as |post|}}
             {{>post-card post}}
