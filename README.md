@@ -87,4 +87,4 @@ If you encounter any bugs or other problems, [submit an issue](https://github.co
 Do you see something I missed or a more succint and effective way this code can be written? Great! Please reach out and let me know how I can improve. Thanks in advance for your tips, tricks, and pointers!
 
 ## Acknowledgemnts
-Thank you to my bootcamp instructional team and cohort, for helping me along this journey to become a developer.
+Thank you to my bootcamp instructional team and cohort, for helping me along this journey to become a developer!
