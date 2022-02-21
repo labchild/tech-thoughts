@@ -58,6 +58,11 @@ main {
     color: var(--brand-color);
 }
 
+.clean-link:disabled {
+    text-decoration: none;
+    color: var(--muted-grey);
+}
+
 .logo-sm {
     width: 1.7em;
     margin: 0 0 0 1em;
