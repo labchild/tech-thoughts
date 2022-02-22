@@ -64,7 +64,11 @@ To view your own posts and account information, click the _dashboard_ link in th
 
 If you click on the _edit post_ button for any of your posts, you will be sent to a new page where you can change your post title or the post body. When you're done making changes, click _submit_ to save. If you'd like to delete the post, click the _delete_ button. This action is **permanent and can't be reveresed**, you will be asked to confirm before your delete request is sent.
 
-![edit preview](/public/images/edit-preview.png) ![delete preview](/public/images/delete-preview.png)
+![edit preview](/public/images/edit-post-preview.png) ![delete preview](/public/images/delete-preview.png)
+
+At the bottom of posts, you'll see how many comments and likes it has. Click on the like count to see which users liked the post. Click on the title of a post or the comment count to see the post on it's own page with all of the comments listed below it.
+
+![single post preview](/public/images/single-post-preview.png)
 
 When you're done using tech thoughts, you can logout by clicking the _logout_ link in the nav bar at the top of the page. If you are idle on tech thoughts for more than 20 minutes, you will be logged out automatically.
 
